@@ -7,10 +7,10 @@ import scala.util.parsing.combinator.JavaTokenParsers
  */
 trait BasicExpressionParser extends JavaTokenParsers{
 
-  def expr:Parser[Any] = muldiv ~ rep("+" ~ muldiv | "-" ~ muldiv)
+  def expr:Parser[Int] = muldiv ~ rep("+" ~ muldiv | "-" ~ muldiv) ^^ {x => 0}
 
-  def muldiv = factor ~ rep("[*/]".r ~ factor)
+  def muldiv:Parser[Int] = factor ~ rep("[*/]".r ~ factor) ^^ {x => 0} | factor
 
-  def factor = wholeNumber | "(" ~ expr ~ ")"
+  def factor:Parser[Int] = wholeNumber ^^ {_.toInt} | "(" ~> (expr <~ ")")
 
 }

@@ -10,7 +10,7 @@ class BasicExpressionParserSpec extends FlatSpec with Matchers with BasicExpress
   "Parser" should "parse simple additions of two variables" in {
     val actual: ParseResult[Any] = parseAll(expr, "3 + 5")
     actual.successful shouldBe true
-    actual.get shouldBe a [Int]
+    actual.get shouldBe a [java.lang.Integer]
   }
 
   it should "subtract two variables" in {
