@@ -11,7 +11,6 @@ trait BasicExpressionParser extends JavaTokenParsers{
     case x ~ xs => xs.foldLeft(x) {
       case (a, "+" ~ b) => Add(a, b)
       case (a, "-" ~ b) => Sub(a, b)
-      case _ => Leaf(0)
     }
   }
 
@@ -20,7 +19,7 @@ trait BasicExpressionParser extends JavaTokenParsers{
       case (a, "*" ~ b) => Mul(a, b)
       case (a, "/" ~ b) => Div(a, b)
     }
-  } | factor
+  }
 
   def factor:Parser[Tree] = wholeNumber ^^ {x => Leaf(x.toInt)} | "(" ~> (expr <~ ")")
 
