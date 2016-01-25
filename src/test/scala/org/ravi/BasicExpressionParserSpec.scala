@@ -14,4 +14,8 @@ class BasicExpressionParserSpec extends FlatSpec with Matchers with BasicExpress
   it should "subtract two variables" in {
     parseAll(expr, "3 - 5").successful shouldBe true
   }
+
+  it should "add and subtract more than two variables" in {
+    parseAll(expr, "2 + 3 - 4 + 10").successful shouldBe true
+  }
 }
