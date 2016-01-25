@@ -8,10 +8,10 @@ import org.scalatest.{FlatSpec, Matchers}
 
 class BasicExpressionParserSpec extends FlatSpec with Matchers with BasicExpressionParser {
   "Parser" should "parse simple additions of two variables" in {
-    val actual: ParseResult[Any] = parseAll(expr, "3 + 5")
+    val actual: ParseResult[Tree] = parseAll(expr, "3 + 5")
     actual.successful shouldBe true
-    actual.get shouldBe a [java.lang.Integer]
-    actual.get shouldBe 8
+    actual.get shouldBe a [Tree]
+    eval(actual.get) shouldBe 8
   }
 
   it should "subtract two variables" in {
