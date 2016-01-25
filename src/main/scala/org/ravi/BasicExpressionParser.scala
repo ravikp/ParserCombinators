@@ -9,7 +9,7 @@ trait BasicExpressionParser extends JavaTokenParsers{
 
   def expr:Parser[Any] = muldiv ~ rep("+" ~ muldiv | "-" ~ muldiv)
 
-  def muldiv = factor ~ rep("[*/]".r ~ factor) | factor
+  def muldiv = factor ~ rep("[*/]".r ~ factor)
 
   def factor = wholeNumber | "(" ~ expr ~ ")"
 
