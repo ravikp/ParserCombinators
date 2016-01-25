@@ -10,6 +10,7 @@ trait BasicExpressionParser extends JavaTokenParsers{
   def expr:Parser[Tree] = muldiv ~ rep("+" ~ muldiv | "-" ~ muldiv) ^^ {
     case x ~ xs => xs.foldLeft(x) {
       case (a, "+" ~ b) => Add(a, b)
+      case (a, "-" ~ b) => Sub(a, b)
       case _ => Leaf(0)
     }
   }
@@ -22,10 +23,12 @@ trait BasicExpressionParser extends JavaTokenParsers{
 
   sealed abstract class Tree
   case class Add(left: Tree, right:Tree) extends Tree
+  case class Sub(left: Tree, right:Tree) extends Tree
   case class Leaf(weight: Int) extends Tree
 
   def eval(tree: Tree):Int = tree match {
     case Add(l, r) => eval(l) + eval(r)
+    case Sub(l, r) => eval(l) - eval(r)
     case Leaf(w) => w
   }
 
