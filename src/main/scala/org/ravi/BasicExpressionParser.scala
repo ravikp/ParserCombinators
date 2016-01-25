@@ -7,7 +7,7 @@ import scala.util.parsing.combinator.JavaTokenParsers
  */
 trait BasicExpressionParser extends JavaTokenParsers{
 
-  def expr:Parser[Tree] = muldiv ~ rep("+" ~ muldiv | "-" ~ muldiv) ^^ {
+  def expr:Parser[Tree] = muldiv ~ rep("[+-]".r ~ muldiv) ^^ {
     case x ~ xs => xs.foldLeft(x) {
       case (a, "+" ~ b) => Add(a, b)
       case (a, "-" ~ b) => Sub(a, b)
