@@ -15,7 +15,9 @@ class BasicExpressionParserSpec extends FlatSpec with Matchers with BasicExpress
   }
 
   it should "subtract two variables" in {
-    parseAll(expr, "3 - 5").successful shouldBe true
+    val parseResult = parseAll[Tree](expr, "3 - 5")
+    parseResult.successful shouldBe true
+    eval(parseResult.get) shouldBe -2
   }
 
   it should "add and subtract more than two variables" in {
