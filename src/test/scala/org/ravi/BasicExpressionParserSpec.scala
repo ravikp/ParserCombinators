@@ -27,7 +27,9 @@ class BasicExpressionParserSpec extends FlatSpec with Matchers with BasicExpress
   }
 
   it should "parse expressions with parenthesis" in {
-    parseAll(expr, "(2-3)").successful shouldBe true
+    val result = parseAll[Tree](expr, "(2-3)")
+    result.successful shouldBe true
+    eval(result.get) shouldBe -1
   }
 
   it should "parse expressions with multiplication" in {
