@@ -33,7 +33,9 @@ class BasicExpressionParserSpec extends FlatSpec with Matchers with BasicExpress
   }
 
   it should "parse expressions with multiplication" in {
-    parseAll(expr, "2 * (1 + 3)").successful shouldBe true
+    val result = parseAll[Tree](expr, "2 * (1 + 3)")
+    result.successful shouldBe true
+    eval(result.get) shouldBe 8
   }
 
   it should "parse expressions with division" in {
