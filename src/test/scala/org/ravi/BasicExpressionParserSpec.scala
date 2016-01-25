@@ -22,4 +22,8 @@ class BasicExpressionParserSpec extends FlatSpec with Matchers with BasicExpress
   it should "parse expressions with parenthesis" in {
     parseAll(expr, "(2-3)").successful shouldBe true
   }
+
+  it should "parse expressions with multiplication" in {
+    parseAll(expr, "2 * (1 + 3)").successful shouldBe true
+  }
 }
