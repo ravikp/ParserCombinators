@@ -7,6 +7,6 @@ import scala.util.parsing.combinator.JavaTokenParsers
  */
 trait BasicExpressionParser extends JavaTokenParsers{
 
-  def expr:Parser[Any] = wholeNumber ~ "+" ~ wholeNumber
+  def expr:Parser[Any] = wholeNumber ~ ("+" ~ wholeNumber | "-" ~ wholeNumber)
 
 }
