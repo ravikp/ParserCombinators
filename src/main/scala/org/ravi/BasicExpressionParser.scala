@@ -7,15 +7,26 @@ import scala.util.parsing.combinator.JavaTokenParsers
  */
 trait BasicExpressionParser extends JavaTokenParsers{
 
-  def expr:Parser[Tree] = muldiv ~ rep("+" ~ muldiv | "-" ~ muldiv) ^^ {x => Leaf(0)}
+  def expr:Parser[Tree] = muldiv ~ rep("+" ~ muldiv | "-" ~ muldiv) ^^ {
+    case x ~ xs => xs.foldLeft(x) {
+      case (a, "+" ~ b) => Add(a, b)
+      case _ => Leaf(0)
+    }
+  }
 
-  def muldiv:Parser[Tree] = factor ~ rep("[*/]".r ~ factor) ^^ {x => Leaf(0)} | factor
+  def muldiv:Parser[Tree] = factor ~ rep("[*/]".r ~ factor) ^^ {
+    case x ~ xs => x
+  } | factor
 
   def factor:Parser[Tree] = wholeNumber ^^ {x => Leaf(x.toInt)} | "(" ~> (expr <~ ")")
 
   sealed abstract class Tree
+  case class Add(left: Tree, right:Tree) extends Tree
   case class Leaf(weight: Int) extends Tree
 
-  def eval(tree: Tree):Int = ???
+  def eval(tree: Tree):Int = tree match {
+    case Add(l, r) => eval(l) + eval(r)
+    case Leaf(w) => w
+  }
 
 }
