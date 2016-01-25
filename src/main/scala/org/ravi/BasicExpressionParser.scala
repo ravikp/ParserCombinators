@@ -7,8 +7,8 @@ import scala.util.parsing.combinator.JavaTokenParsers
  */
 trait BasicExpressionParser extends JavaTokenParsers{
 
-  def expr:Parser[Any] = mult ~ rep("+" ~ mult | "-" ~ mult)
-  def mult = factor ~ "*" ~ factor | factor
+  def expr:Parser[Any] = muldiv ~ rep("+" ~ muldiv | "-" ~ muldiv)
+  def muldiv = factor ~ rep("[*/]".r ~ factor) | factor
 
   def factor = wholeNumber | "(" ~ expr ~ ")"
 
