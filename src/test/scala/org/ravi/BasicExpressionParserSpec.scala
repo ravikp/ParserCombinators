@@ -7,7 +7,7 @@ import org.scalatest.{FlatSpec, Matchers}
  */
 
 class BasicExpressionParserSpec extends FlatSpec with Matchers with BasicExpressionParser {
-  "Parse" should "parse simple additions of two variables" in {
+  "Parser" should "parse simple additions of two variables" in {
     parseAll(expr, "3 + 5").successful shouldBe true
   }
 
@@ -17,5 +17,9 @@ class BasicExpressionParserSpec extends FlatSpec with Matchers with BasicExpress
 
   it should "add and subtract more than two variables" in {
     parseAll(expr, "2 + 3 - 4 + 10").successful shouldBe true
+  }
+
+  it should "parse expressions with parenthesis" in {
+    parseAll(expr, "(2-3)").successful shouldBe true
   }
 }
